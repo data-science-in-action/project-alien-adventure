@@ -1,0 +1,225 @@
+---
+title: "意大利新冠肺炎疫情预测及理性评估"
+author: "戎翔、高彦梅、卫晓帆、李宇"
+documentclass: ctexart
+geometry:
+- lmargin=2.5cm
+- rmargin=2.5cm
+fontsize: 12
+output:
+  rticles::ctex:
+    fig_caption:yes
+    html_document
+---
+<style type="text/css">
+	#header {
+	    text-align: center;
+	}
+</style>
+
+## 指数平滑法
+
+&emsp;&emsp;时间序列预测方法的基本思想是预测一个现象的未来变化时,用该现象的过去行为来预测未来。即通过时间序列的历史数据揭示现象随时间变化的规律,将这种规律延伸到未来,从而对该现象的未来做出预测。它的重要分支指数平滑法是由早期的移动平均法发展而来的。
+    
+### 指数平滑模型的发展
+
+&emsp;&emsp;指数平滑模型是由加拿大人C.C.霍尔特(C.C.Holt)于1957年在未公开发表的报告中首次提出的，它在报告中详细的阐述了单指数平滑模型。美国人布朗(Brown)在1962年的著作中详细论述了这种方法，并提出了布朗高次指数平滑模型,并将之应用于对非线形模型的预测分析。之后，美国人姆斯(Muth)在1965年首先提出指数平滑能够产生最优预报的时间序列模型。接着,在70年代末期，出现了温特线性和季节性指数平滑模型，使得指数平滑模型可以将数据的季节性、趋势性因素也纳入考虑范围。以上这些基于时间序列的指数平滑模型的区别在于它们是否使用多个指数，是否是趋势的或者季节性改变。1985年，美国人加德纳，发表了一篇专门论述指数平滑法的文章，直到今天这篇文章还起着非常重要的作用。之后的十几年，已经比较健全的指数平滑模型被推广到了需要预测科学的各个领域,发挥了非常大的作用。但是随着应用的普及,人们逐渐发现它有以下三个问题很难解决。
+    
+&emsp;&emsp;1）平滑初值：要确定一个平滑初值。
+    
+&emsp;&emsp;2）静态平滑参数：静态参数很难适应时间序列自身变化。
+    
+&emsp;&emsp;3）平滑参数值不确定：它一般都是凭借经验或多次试验得到的,这样确定的值很难达到最佳值。
+
+### 指数平滑法的优点及其在流行病学方面的应用
+
+&emsp;&emsp;指数平滑模型具有其它一些算法和模型所不能达到的优势，因而人们对指数平滑的研究逐渐重视起来,并且在实际生活中获得了非常普遍的应用。
+
+&emsp;&emsp;1）指数平滑法有如下几个优点：
+    
+&emsp;&emsp;操作指数平滑法操作简易，成本低廉。公式简单明了，输入数据简单，在普通的计算机上即可完成操作。
+    
+&emsp;&emsp;使用范围和性能适应性强，性能优良，指数平滑法可以说适用于几乎所有的以时间序列为基础的预测中，并不仅仅在经济预测上，还可以用于自然科学、军事等各个方面。
+    
+&emsp;&emsp;数据处理的方法利用全部历史数据和相关信息。遵循“厚近薄远”的规则加权、修匀数据。使得数据模型具有抵御和减弱异常数据影响的功能，并使时间序列包含的历史规律显著的体现出来，这是指数平滑最显著的特点。
+    
+&emsp;&emsp;数据的需求和处理量可以节省很多数据和数据处理时间，指数平滑预测只要有上期实际数据和预测值就可以计算下期的预测值，这样可以节省很多的数据和计算机处理数据的开销。
+    
+&emsp;&emsp;2）指数平滑法在流行病中的应用
+    
+&emsp;&emsp;传统的统计学上，主要将时间序列预测分为回归预测法和平滑预测法。在运用回归法进行预测时，正确判断变量之间的相互关系,选择预测目标的主要影响因素作为预测法的自变量是至关重要的。经济现象的复杂性使得有时实际上难以找到影响预测目标的主要因素,或者即使找到了,也可能存在主要因素缺乏必要的统计资料。这时,回归分析预测法就不能使用,但可以使用时间序列平滑预测法。
+    
+&emsp;&emsp;时间序列平滑预测法是将预测目标的历史数据按照时间顺序排列成时间序列,然后分析它随着时间的变化趋势,外推预测目标的未来值。时间序列平滑预测法可分为确定性时间序列预测法和随机性时间序列预测法。随机时间序列预测需要较深的数学知识和较多的历史数据,方法复杂,计算量大。确定性时间预测法常用的方法有移动平均法、加权移动平均法、指数平滑法、指数平滑多项式模型预测法、指数曲线模型预测法和成长曲线预测法等。
+    
+&emsp;&emsp;指数平滑预测法是一种确定性的平滑预测法。其实质是通过计算指数平滑平均数来平滑时间序列,消除历史统计序列中的随机波动,以找出其主要发展趋势。根据设置参数的不同可以分为单指数预测,双指数预测,和三指数预测。
+    
+&emsp;&emsp;指数平滑法已广泛应用于传染病发病率的预测，如流感样病例、肝炎等，其基本思想是预测值为历史观测值的加权和，且对不同的历史数据给予不同的权重，新数据赋予较大的权重，旧数据赋予较小的权重，主要用于中短期预测。一次指数平滑法针对没有趋势和季节性的序列，二次指数平滑法针对有趋势但没有季节性的序列，三次指数平滑法针对有趋势也有季节性的序列。
+    
+### 二次指数平滑法
+
+&emsp;&emsp;在一次指数平滑预测公式中,无论是一步预测还是多步预测都使用同一公式,这对没有趋势的稳定序列是可行的。但是,若是用在上升或下降趋势明显的需求序列上就不够理想。二次指数平滑就是为弥补这种缺陷而设计的一种方法,但它不是直接用于序列预测的方法,而是为计算有线性趋势的线性预测方程的系数服务的。
+    
+&emsp;&emsp;所谓二次指数的平滑法,是对一次指数平滑后的序列数据再作一次指数平滑,其平滑公式如下所示。
+    
+$$S^2_t=\alpha{S^1_t}+(1-\alpha)S^2_{t-1}$$
+$$S^1_t=\alpha{x_{t-1}}+(1-\alpha)S_{t-1}=\hat{x}_t$$
+&emsp;&emsp;其中，$S^2_t$是二次指数平均值，$\alpha$为平滑常数。
+   
+&emsp;&emsp;同一次指数平滑公式一样，在使用二次指数平滑公式时，也涉及初始值$S^2_0$的取法。但随着时间的推移，初始值的影响是很小的，其取法与一次指数平滑的取法相似。
+   
+&emsp;&emsp;由于时间序列具有线性趋势，故设线性预测方程如下式所示：
+   $$\hat{x}_{i+t}=\alpha_i+b_i\tau$$
+&emsp;&emsp;式中$\tau$称为预测时效，有指数平滑方法的基本定理有下式：
+   $$\alpha_t=2S^1_t-S^2_t$$
+   $$b_t=\frac{\alpha}{1-\alpha}[S^1_t-S^2_t]$$
+&emsp;&emsp;由此得出预测公式如下所示：
+   $$\hat{x}_{i+t}=\alpha_i+b_i\tau=(2+\frac{\alpha\tau}{1-\alpha})S^1_t-(1+\frac{\alpha\tau}{1-\alpha})S^2_t$$
+
+## 实证研究  
+&emsp;&emsp;新冠肺炎(COVID-19)是由新冠肺炎病毒(SARA-COV-2)引起的一种以肺部炎症病变为主的疾病，包括呼吸困难、呼吸窘迫综合征等类SARS样呼吸系统症状。自2019年12月在湖北省武汉市发现COVID-19病例以来，疫情快速蔓延至全国。截至2020年5月4日，COVID-19疫情已影响到全球214个国家和地区，累计确诊病例超过355万，累计死亡已超过25万。绝大多数国家目前疫情仍然在持续增长，远没有达到控制程度。意大利作为COVID-19疫情“重灾区”，截至2020年5月4日，累计确诊病例已达到21万，构建意大利COVID-19疫情变化趋势的合理预测模型，对COVID-19疫情防控具有重要的现实意义，也可以对当前世界COVID-19疫情防控提供决策依据。
+
+### 累计确诊病例预测
+
+&emsp;&emsp;首先看看意大利2020年3月1日-5月4日的累计确诊情况趋势图以及增长率情况，如下图所示：
+
+```{r echo=FALSE}
+h<-read.table(file="F:/rstudy/Italy.csv",sep=",",header = T)
+p1<-plot(h$total.confirmed,type='l',xlab="time",ylab="total confirmed",sub="图1 累计确诊趋势图")
+p2<-plot(h$growth.rate,type='l',xlab="time",ylab="growth.rate",sub="图2 增长率")
+```
+
+&emsp;&emsp;观察上图，可见累计确诊趋势图一直呈现出增长的趋势，结合其增长率，累计确诊人数在初期，增长很快，增长率最高达到了33.21%，其后开始呈现波动时下降，从4月30日开始，增长率下降到1%以下。
+
+&emsp;&emsp;根据上述对指数平滑法的介绍，根据意大利COVID-19疫情数据的变化趋势，本文选择二次指数平滑模型进行研究。我们对累计确诊人数使用R中的HoltWinters()进行霍尔特指数平滑预测,并绘出预测和观测值的曲线图，来观看预测结果。
+
+```{r echo=FALSE}
+hh<-h$total.confirmed
+tcforecasts<-HoltWinters(hh, gamma=FALSE)
+p3<-plot(tcforecasts,xlab="time",ylab="total confirmed",sub="图3 累计确诊趋势图")
+```
+
+&emsp;&emsp;总体看来，预测的效果还不错（黑色为原始序列，红色为预测值）,这两条线几乎吻合。同样我们也可以通过变量tcforecasts$SSE查看样本内误差平方和。
+
+```{r echo=FALSE}  
+tcforecasts
+tcforecasts$SSE
+```
+
+&emsp;&emsp;相关预测值如上图所示，$\alpha$的值为1，$bate$的值为0.63，这些都是非常高的值，充分显示了无论是水平上还是趋势的斜率上，当前值对时间序列上的最近的观测值的依赖关系比较重，这样的结果也符合我们的预期，因为时间序列的水平和斜率在整个时间段内发生了巨大的变化。
+
+&emsp;&emsp;此外，我们可以通过HoltWinters()函数中的“l.start”和“b.start”的参数指定水平和趋势的初始值，常见的设定水平初始值为时间序列的第一个值（1128），斜率的初始值则是其第二个值减去第一个值（561），则设定如下：
+
+
+```{r echo=FALSE}  
+HoltWinters(hh, gamma=FALSE, l.start=1128, b.start=561)
+```
+
+&emsp;&emsp;同样采用forecast包预测未来时间节点的值，假设我们预测未来20期的数据，具体实现和结果展示如下： 
+
+```{r echo=FALSE}
+install.packages("forecast")
+library("forecast")
+tcforecasts2<-forecast(tcforecasts, h=20)
+p4<-plot(tcforecasts2,xlab="time",ylab="total confirmed",sub="图4 累计确诊趋势预测图")
+```
+
+&emsp;&emsp;上图中预测部分使用蓝色的线条标识出来，深灰色的阴影区域为80%，浅灰色阴影区为95%的预测区间。预测值如下表所示：
+
+```{r echo=FALSE}
+tcforecasts2
+```
+
+&emsp;&emsp;为了检验预测效果，我们同样检验延迟1-20阶中的预测误差是否非零自相关，同样继续采用Ljung-Box检验：
+
+```{r echo=FALSE}
+h1<-tcforecasts2$residuals
+h2<-na.omit(h1)
+p5<-acf(h2, lag.max=20)
+Box.test(tcforecasts2$residuals, lag=20, type="Ljung-Box")
+```
+
+&emsp;&emsp;经过检验发现，p值小于0.05，说明存在残差自相关的问题。下面我们做预测的误差图以及预测误差分布的直方图，结果如下所示：
+
+```{r echo=FALSE}
+p6<-plot.ts(tcforecasts2$residuals,sub="图5 预测误差图")
+plotForecastErrors<-function(forecasterrors){
+  # make a red histogram of the forecast errors:
+  mybinsize<-IQR(forecasterrors)/4
+  mysd<-sd(forecasterrors)
+  mymin<-min(forecasterrors)-mysd*3
+  mymax<-max(forecasterrors)+mysd*3
+  mybins<-seq(mymin,mymax,mybinsize)
+  hist(forecasterrors,col="red",freq=FALSE,breaks=mybins)
+  # freq=FALSE ensures the area under the histogram = 1
+  # generate normally distributed data with mean 0 and standard deviation mysd
+  mynorm<-rnorm(10000,mean=0,sd=mysd)
+  myhist<-hist(mynorm,plot=FALSE,breaks=mybins)
+  # plot the normal curve as a blue line on top of the histogram of forecast errors:
+  points(myhist$mids,myhist$density,type="l",col="blue",lwd=2)
+}
+h3<-na.omit(tcforecasts2$residuals)
+p7<-plotForecastErrors(h3)
+```
+
+&emsp;&emsp;通过上面的分析，尽管残差的Ljung-Box检验的p值小于0.05，但是从预测的误差图以及预测误差分布的直方图可以看出，预测误差近似服从零均值的正态分布。
+
+### 增长率的预测
+
+&emsp;&emsp;下面我们分析增长率的情况，首先我们对累计确诊人数使用R中的HoltWinters()进行霍尔特指数平滑预测,并绘出预测和观测值的曲线图，来观看预测结果。
+
+```{r echo=FALSE}
+hratio<-h$growth.rate
+hrforecasts<-HoltWinters(hratio,gamma=FALSE)
+p8<-plot(hrforecasts,xlab="time",ylab="growth.rate",sub="图6 增长率")
+```
+
+&emsp;&emsp;从上方的图形可以看出，该预测具有一定的滞后性，特别是在10天左右时，滞后性表现得最为明显，后期拟合值与观察值几乎重合。
+
+```{r echo=FALSE}
+hrforecasts
+```
+
+&emsp;&emsp;可以从表中看到，$\alpha$的值为0.934，$bate$的值为0.616，这些都是非常高的值，充分显示了无论是水平上还是趋势的斜率上，当前值对时间序列上的最近的观测值的依赖关系比较重，这样的结果也符合我们的预期。下面我们预测未来20天的增长率，情况如下图所示：
+
+```{r echo=FALSE}
+HoltWinters(hratio,gamma=FALSE,l.start=3.55, b.start=29.66)
+hrforecasts2<-forecast(hrforecasts, h=20)
+p9<-plot(hrforecasts2,xlab="time",ylab="growth.rate",sub="图7 增长率预测")
+```
+
+```{r echo=FALSE}
+hrforecasts2
+```
+
+&emsp;&emsp;根据上面的预测结果可以看出，意大利的新冠肺炎病例数即将达到顶峰，在5月8、9日，增长率将变为0。下面我们对模型进行检验，结果如下：
+
+```{r echo=FALSE}
+Box.test(hrforecasts2$residuals, lag=20, type="Ljung-Box")
+```
+
+&emsp;&emsp;当我们进行Ljung-Box检验时，P值为0.9522，意味着我们是不足以证明样本内预测误差在滞后1-20阶的时候是非零自相关的。下面我们同样做增长率的预测的误差图以及预测误差分布的直方图，结果如下所示：
+
+```{r echo=FALSE}
+p10<-plot.ts(hrforecasts2$residuals,sub="图8 增长率的预测误差图")
+plotForecastErrors<-function(forecasterrors){
+  # make a red histogram of the forecast errors:
+  mybinsize<-IQR(forecasterrors)/4
+  mysd<-sd(forecasterrors)
+  mymin<-min(forecasterrors)-mysd*3
+  mymax<-max(forecasterrors)+mysd*3
+  mybins<-seq(mymin,mymax,mybinsize)
+  hist(forecasterrors,col="red",freq=FALSE,breaks=mybins)
+  # freq=FALSE ensures the area under the histogram = 1
+  # generate normally distributed data with mean 0 and standard deviation mysd
+  mynorm<-rnorm(10000,mean=0,sd=mysd)
+  myhist<-hist(mynorm,plot=FALSE,breaks=mybins)
+  # plot the normal curve as a blue line on top of the histogram of forecast errors:
+  points(myhist$mids,myhist$density,type="l",col="blue",lwd=2)
+}
+h4<-na.omit(hrforecasts2$residuals)
+p11<-plotForecastErrors(h4)
+```
+
+&emsp;&emsp;通过观察预测的误差图以及预测误差分布的直方图，我们可以看到，在前期，预测误差均值并不是0，在后期，均值为0，预测误差主要集中在0附近，因此，我们可以认为对增长率的估计是可行的。
+
+&emsp;&emsp;根据预测结果显示，意大利的累计确诊的增长率在5月8、9号将达到0值。
