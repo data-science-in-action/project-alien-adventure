@@ -1,24 +1,17 @@
 ---
 title: "意大利新冠肺炎疫情预测及理性评估"
-author: "戎翔 高彦梅 李宇 卫晓帆"
-date: "2020/6/24"
+author:
+  - 戎翔
+  - 高彦梅
+  - 李宇
+  - 卫晓帆
 documentclass: ctexart
-geometry:
-- lmargin=2.5cm
-- rmargin=2.5cm
-fontsize: 12
 output:
-pdf_document: 
+  rticles::ctex:
+    fig_caption: yes
+    number_sections: yes
     toc: yes
-    latex_engine: "xelatex"
-    extra_dependencies:
-      ctexcap: UTF8
----
-<style type="text/css">
-	#header {
-	    text-align: center;
-	}
-</style>
+classoption: "hyperref,"
 ---
 
 # 1引言
