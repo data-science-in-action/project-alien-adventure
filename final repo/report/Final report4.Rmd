@@ -1,18 +1,21 @@
 ---
 title: "意大利新冠肺炎疫情预测及理性评估"
-author:
-  - 戎翔
-  - 高彦梅
-  - 李宇
-  - 卫晓帆
+author: "戎翔、高彦梅、卫晓帆、李宇"
+date: "2020/6/24"
 documentclass: ctexart
+geometry:
+- lmargin=2.5cm
+- rmargin=2.5cm
+fontsize: 12
 output:
-  rticles::ctex:
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
-classoption: "hyperref,"
+    rticles::ctex:
+      pdf_document
 ---
+<style type="text/css">
+	#header {
+	    text-align: center;
+	}
+</style>
 
 # 1引言
 ## 1.1背景及研究内容
@@ -24,11 +27,11 @@ classoption: "hyperref,"
 
 ## 1.2文献综述
 
-&emsp;&emsp;林硕蕾利用灰色系统理论建立GM（1,1）模型，由1997-2002年旅游外汇收入的平均值预测2003年旅游外汇收入平均值；并通过历史数据计算每个月的指标值与全年总值的关系，得出每个月旅游外汇收入所占全年旅游收入的权重，从而预测出正常情况下2003年每个月外汇旅游收入的指标值；最后将其与2003年每月外汇旅游收入的真实值进行比较，定量分析SARS对旅游外汇收入的影响[1]。
+&emsp;&emsp;林硕蕾利用灰色系统理论建立GM(1,1)模型，由1997-2002年旅游外汇收入的平均值预测2003年旅游外汇收入平均值；并通过历史数据计算每个月的指标值与全年总值的关系，得出每个月旅游外汇收入所占全年旅游收入的权重，从而预测出正常情况下2003年每个月外汇旅游收入的指标值；最后将其与2003年每月外汇旅游收入的真实值进行比较，定量分析SARS对旅游外汇收入的影响[1]。
 
 &emsp;&emsp;王旭艳等人利用1月23日到3月25日湖北省疫情数据，采用平滑指数模型对湖北省新冠肺炎疫情变化趋势进行分析和预测。结果表明，采用指数平滑模型获得的拟合值与实际值的趋势基本吻合，模型拟合效果较好，预测结果表明在4月2日现存确诊病例数将减少至1000例以内，且主要为重症和危重症病例[2]。
 
-&emsp;&emsp;严婧，杨北方对湖北省丙肝疫情资料进行整理，将2004年1月－2014年12月丙肝发病数据作为建模部分，2015年1－12月发病数据作为模型验证分部，对丙肝不同年份发病率进行趋势卡方检验，建立 ARIMA模型和指数平滑法，并进行模型的参数估计、拟合检验、计算和预测、检验与评价。将预测值与实际值进行比较，计算相对误差绝对值，相对误差绝对值越小说明预测越准确，然后进行型预测效果比较[3]。
+&emsp;&emsp;严婧，杨北方对湖北省丙肝疫情资料进行整理，将2004年1月－2014年12月丙肝发病数据作为建模部分，2015年1－12月发病数据作为模型验证分部，对丙肝不同年份发病率进行趋势卡方检验，建立ARIMA模型和指数平滑法，并进行模型的参数估计、拟合检验、计算和预测、检验与评价。将预测值与实际值进行比较，计算相对误差绝对值，相对误差绝对值越小说明预测越准确，然后进行型预测效果比较[3]。
 
 # 2数据来源及描述统计
 ## 2.1数据来源
@@ -39,13 +42,13 @@ classoption: "hyperref,"
 
 ## 2.2意大利疫情基本描述
 
-```{r ,out.height="50%", out.width="75%",fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%",fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/2.1.png")
 ```
 
 &emsp;&emsp;截至6月7日，意大利累计确诊人数达23万之多，累计病例数从3月初开始迅速增加，到5月份左右减缓，而后趋于稳定，尤其在近日以来，新增确诊病例数在200左右波动，并且在不断减少，说明意大利疫情得到了较好的控制。
 
-```{r ,out.height="80%", out.width="90%",fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%",fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/2.2.png")
 ```
 
@@ -53,7 +56,7 @@ knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/2.2.png"
 
 ## 2.3疫情下的意大利旅游经济
 
-```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%", fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/2.3.png")
 ```
 
@@ -63,13 +66,110 @@ knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/2.3.png"
 
 ## 3.1指数平滑模型理论
 
+
+&emsp;&emsp;时间序列预测方法的基本思想是预测一个现象的未来变化时,用该现象的过去行为来预测未来。即通过时间序列的历史数据揭示现象随时间变化的规律,将这种规律延伸到未来,从而对该现象的未来做出预测。它的重要分支指数平滑法是由早期的移动平均法发展而来的。
+
+### 3.1.1指数平滑法的发展
+
+&emsp;&emsp;指数平滑模型是由加拿大人C.C.霍尔特(C.C.Holt)于1957年在未公开发表的报告中首次提出的，它在报告中详细的阐述了单指数平滑模型。美国人布朗(Brown)在1962年的著作中详细论述了这种方法，并提出了布朗高次指数平滑模型,并将之应用于对非线形模型的预测分析。之后，美国人姆斯(Muth)在1965年首先提出指数平滑能够产生最优预报的时间序列模型。接着,在70年代末期，出现了温特线性和季节性指数平滑模型，使得指数平滑模型可以将数据的季节性、趋势性因素也纳入考虑范围。以上这些基于时间序列的指数平滑模型的区别在于它们是否使用多个指数，是否是趋势的或者季节性改变。1985年，美国人加德纳，发表了一篇专门论述指数平滑法的文章，直到今天这篇文章还起着非常重要的作用。之后的十几年，由于指数平滑法具有操作简易，成本低廉;使用范围和性能适应性强，性能优良；能够利用全部历史数据和相关信息进行预测的优点，已经比较健全的指数平滑模型被推广到了需要预测科学的各个领域,发挥了非常大的作用。
+
+&emsp;&emsp;随着指数平滑法的不断发展，指数平滑法也应用到时间序列的分析中，指数平滑预测法是一种确定性的平滑预测法。其实质是通过计算指数平滑平均数来平滑时间序列,消除历史统计序列中的随机波动,以找出其主要发展趋势。根据设置参数的不同可以分为单指数预测,双指数预测,和三指数预测。
+    
+&emsp;&emsp;同时，指数平滑法也广泛应用于传染病发病率的预测，如流感样病例、肝炎等，其基本思想是预测值为历史观测值的加权和，且对不同的历史数据给予不同的权重，新数据赋予较大的权重，旧数据赋予较小的权重，主要用于中短期预测。一次指数平滑法针对没有趋势和季节性的序列，二次指数平滑法针对有趋势但没有季节性的序列，三次指数平滑法针对有趋势也有季节性的序列。根据新冠肺炎疫情数据的特征，本文采用二次指数平滑法进行预测。    
+
+&emsp;&emsp;尽管指数平滑法应用得到大力推广，但人们也逐渐发现它的一些缺点。
+    
+&emsp;&emsp;1）平滑初值的确定：在预测过程中首先要确定一个平滑初值。
+    
+&emsp;&emsp;2）静态平滑参数：静态参数很难适应时间序列自身变化。
+    
+&emsp;&emsp;3）平滑参数值具有不确定性：它一般都是凭借经验或多次试验得到的,这样确定的值很难达到最佳值。
+    
+### 3.1.2二次指数平滑法
+
+&emsp;&emsp;在一次指数平滑预测公式中,无论是一步预测还是多步预测都使用同一公式,这对没有趋势的稳定序列是可行的。但是,若是用在上升或下降趋势明显的需求序列上就不够理想。二次指数平滑就是为弥补这种缺陷而设计的一种方法,但它不是直接用于序列预测的方法,而是为计算有线性趋势的线性预测方程的系数服务的。
+    
+&emsp;&emsp;所谓二次指数的平滑法,是对一次指数平滑后的序列数据再作一次指数平滑,其平滑公式如下所示。
+    
+$$S^2_t=\alpha{S^1_t}+(1-\alpha)S^2_{t-1}$$
+$$S^1_t=\alpha{x_{t-1}}+(1-\alpha)S_{t-1}=\hat{x}_t$$
+&emsp;&emsp;其中，$S^2_t$是二次指数平均值，$\alpha$为平滑常数。
+   
+&emsp;&emsp;同一次指数平滑公式一样，在使用二次指数平滑公式时，也涉及初始值$S^2_0$的取法。但随着时间的推移，初始值的影响是很小的，其取法与一次指数平滑的取法相似，一般取时间序列的初值作为指数平滑值，平滑参数一般利用经验，通过试验选取合适的值。
+   
+&emsp;&emsp;由于时间序列具有线性趋势，故设线性预测方程如下式所示：
+
+   $$\hat{x}_{i+t}=\alpha_i+b_i\tau$$
+   
+&emsp;&emsp;式中$\tau$称为预测时效，有指数平滑方法的基本定理有下式：
+   $$\alpha_t=2S^1_t-S^2_t$$
+   $$b_t=\frac{\alpha}{1-\alpha}[S^1_t-S^2_t]$$
+&emsp;&emsp;由此得出预测公式如下所示：
+   $$\hat{x}_{i+t}=\alpha_i+b_i\tau=(2+\frac{\alpha\tau}{1-\alpha})S^1_t-(1+\frac{\alpha\tau}{1-\alpha})S^2_t$$
+
 ## 3.2指数平滑法的应用
+
+&emsp;&emsp;我们对累计确诊人数使用R中的HoltWinters()进行霍尔特指数平滑预测,并绘出预测和观测值的曲线图，来观看预测结果。
+
+```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/3.1.png")
+```
+
+&emsp;&emsp;总体看来，预测的效果还不错（黑色为原始序列，红色为预测值）,这两条线几乎吻合。
+
+&emsp;&emsp;根据相关预测值显示，alpha值为1，beta预测值为0.6313，这些值较大，充分显示了无论是水平上还是趋势的斜率上，当前值对时间序列上的最近的观测值的依赖关系比较重，这符合我们的预期。
+
+&emsp;&emsp;下面采用forecast包预测未来20天的累计确诊人数，预测图如下所示，图中预测部分使用蓝色的线条标识出来，深灰色的阴影区域为80%，浅灰色阴影区为95%的预测区间。
+
+```{r,out.height="80%", out.width="90%",fig.align='center',echo=FALSE}
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/3.2.png")
+```
+
+&emsp;&emsp;为了检验预测效果，检验延迟1-20阶中的预测误差是否非零自相关，同样继续采用Ljung-Box检验，检验结果如下：
+
+```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao5.png")
+```
+
+&emsp;&emsp;经过检验发现，p值大于0.05，说明不存在残差自相关的问题。因此可以做指数平滑模型。下面列出未来20天的累计确诊人数，如下表所示：
+
+```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao6.png")
+```
+
+&emsp;&emsp;从表中数据可以看出，累计确诊人数还会继续增加，但明显增幅减小。
+
+&emsp;&emsp;为进一步了解意大利的疫情情况，本文将对现存确诊病例数进行预测，结果如下图所示：
+
+```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/3.3.png")
+```
+
+&emsp;&emsp;从图形来看，两条曲线基本吻合，并且根据预测的alpha=1与beta=0.4的情况，这些数据符合我们的预期。
+
+```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/3.4.png")
+```
+
+&emsp;&emsp;为了检验预测效果，检验延迟1-20阶中的预测误差是否非零自相关，同样继续采用Ljung-Box检验，检验结果如下：
+
+```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao9.png")
+```
+
+&emsp;&emsp;经过检验发现，p值大于0.05，说明不存在残差自相关的问题。因此可以做指数平滑模型。下面列出未来20天的现存确诊人数，如下表所示：
+
+```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao10.png")
+```
+
+&emsp;&emsp;从表中可以看出，预计在6月12日，意大利现存确诊人数将减少到3万以下。
 
 # 4基于arima模型对意大利新冠肺炎死亡人数的预测
 
 ## 4.1方法介绍
 
-&emsp;&emsp;ARIMA模型即自回归移动平均模型，时间序列分析模型通常是指求和自回归移动平均模型(Autoregressiveintegratedmovingaverage，ARIMA)，由统计学家Box和Jenkins于1970年首次系统提出，以数理统计和微积分等传统数学理论为基础建立起来的预测模型，是时间序列分析方法中应用比较广泛的方法之一，短期预测准确率较高。在病预测等方面得到广泛应用。根据序列特征，可分为平稳和非平稳时间序列。对于非平稳时间序列，可以通过d次差分运算将其转换为平稳时间序列，此时即为ARIMA。ARIMA模型的形式可表示为ARIMA(p,d,q)。p,d,q分别表示自回归阶数、差分阶数和移动平均阶数。模型构建过程包括数据时间序列平稳化、模型识别、参数估计和模型检验。本研究收集今年3月1号到6月7号意大利疫情数据，用ARIMA模型对死亡人数进行模型构建、拟合，并应用最优模型参数预测意大利疫情发展趋势，以期发现意大利疫情的潜在变化规律，为开展防控工作提供理论依据。
+&emsp;&emsp;ARIMA模型即自回归移动平均模型，时间序列分析模型通常是指求和自回归移动平均模型(Autoregressive integrated moving average，ARIMA)，由统计学家Box和Jenkins于1970年首次系统提出，以数理统计和微积分等传统数学理论为基础建立起来的预测模型，是时间序列分析方法中应用比较广泛的方法之一，短期预测准确率较高。在病预测等方面得到广泛应用。根据序列特征，可分为平稳和非平稳时间序列。对于非平稳时间序列，可以通过d次差分运算将其转换为平稳时间序列，此时即为ARIMA。ARIMA模型的形式可表示为ARIMA(p,d,q)。p,d,q分别表示自回归阶数、差分阶数和移动平均阶数。模型构建过程包括数据时间序列平稳化、模型识别、参数估计和模型检验。本研究收集今年3月1号到6月7号意大利疫情数据，用ARIMA模型对死亡人数进行模型构建、拟合，并应用最优模型参数预测意大利疫情发展趋势，以期发现意大利疫情的潜在变化规律，为开展防控工作提供理论依据。
 
 ## 4.2 ARIMA模型的建立
 
@@ -171,6 +271,10 @@ $$Y=\left[ \begin{matrix} x^{(0)}(2) \\x^{(0)}(3) \\ \vdots \\x^{(0)}(n) \end{ma
 
 &emsp;&emsp;对残差分布的统计特性进行检验。首先，分别计算原始序列的平均值$\bar{X}=\frac{1}{n}\sum_{k=1}^{n}{x^{(0)}(k)}$和方差$S_1=\sqrt{\frac{1}{n}\sum_{k=1}^{n}[{{x^{(0)}(k)-\bar{X}}]^2}}$、残差的均值$\bar{E}=\frac{1}{n-1}\sum_{k=2}^{n}{E(k)}$和方差$S_2=\sqrt{\frac{1}{n-1}\sum_{k=2}^{n}[{{E(k)-\bar{E}}]^2}}$、后验差比值$C=\frac{S_2}{S_1}$、小概率误差$P=P({|E(k)-\bar{E}|<0.6745S_1})$，最后，根据相应标准的临界值的大小，综合评价模型的拟合效果，常用的模型精度判断等级见表1。
 
+```{r,out.height="80%", out.width="90%",fig.align='center', echo=FALSE}
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao1.png")
+```
+
 ### ⑥预测
 
 &emsp;&emsp;根据历史数据计算出2020年每个月的旅游收入占全年总值的比例$u_i$，即$u_i=\sum_{j=1}^{11} {a_{ij}}/\sum_{i=1}^{12} {\sum_{j=1}^{11} {a_{ij}}}$，在得到2020年的预测值后，可算出2020年每个月的旅游收入预测值。
@@ -191,7 +295,7 @@ $$x^{(1)}(t)=52990.92{\rm e}^{0.0445t}-50586.22$$
 
 &emsp;&emsp;根据上式预测得到：$X^{(0)}(11)=3763.723(百万）$,即预测所得2020年全年旅游收入为45164.68（百万）。预测结果如图1所示。
 
-```{r ,out.height="80%", out.width="90%",fig.align='center', echo=FALSE}
+```{r,out.height="80%", out.width="90%",fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/5.1.png")
 ```
 
@@ -200,7 +304,7 @@ $$u=(0.0511,0.0459,0.0606,0.0759,0.0934,0.1056,0.1363,0.1313,0.1095,0.0868,0.053
 &emsp;&emsp;月度预测值与月度真实值比较结果见表2。
 
 ```{r ,out.height="80%", out.width="90%",fig.align='center', echo=FALSE}
-knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/表2.png")
+knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao2.png")
 ```
 
 
@@ -221,10 +325,17 @@ knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/表2.png
 &emsp;&emsp;综上所述，意大利新冠肺炎疫情情况的改善与政策的实施有密不可分的关系，早在3月10日，意大利便开始实行封锁政策，成为欧洲第一个封国的国家。随着全球疫情不断蔓延，意大利疫情却开始呈现下降趋势，可见，在强有力的政策管控下，意大利新冠肺炎疫情情况得到好转，从最开始的累计确诊人数排名第二到目前的排名第七。因此，在其他地区疫情较为严重且本国尚存在新增确诊病例的情况下，防疫意识不可松懈，仍应该保持警惕，注重个人卫生，在重振经济的同时继续做好防疫工作，尽快取得真正的解放。
 
 # 参考文献
+
 [1]林硕蕾.灰色系统在经济上的应用-定量分析SARS对旅游外汇收入的影响
+
 [2]王旭艳,喻勇,胡樱,宇传华.基于指数平滑模型的湖北省新冠肺炎疫情预测分析[J].公共卫生与预防医学,2020,31(01):1-4.
+
 [3]严婧，杨北方.指数平滑法与ARIMA模型在湖北省丙型病毒性肝炎发病预测中的应用
-[4]张文斗,祖正虎,许晴,徐致靖,郑涛.SARS疫情对中国交通运输业和电信业的影响分析[J].军事医学,2012,36(10):762-764+800. 
+
+[4]张文斗,祖正虎,许晴,徐致靖,郑涛.SARS疫情对中国交通运输业和电信业的影响分析[J].军事医学,2012,36(10):762-764+800.
+
 [5]林硕蕾,王凌冉.灰色系统在经济上的应用——定量分析SARS对旅游外汇收入的影响[J].北京工业职业技术学院学报,2005(04):81-83+87.
-[6]张世强,张飒岚,蒋峥,王春丽,王婷. 基于信息挖掘的麻疹流行趋势GM(1,1)评价模型[C]. 中国电子学会信息论分会.Proceedings of 2010 Asia-Pacific Conference on Information Theory (APCIT 2010).中国电子学会信息论分会:中国电子学会信息论分会,2010:335-338. 
+
+[6]张世强,张飒岚,蒋峥,王春丽,王婷. 基于信息挖掘的麻疹流行趋势GM(1,1)评价模型[C]. 中国电子学会信息论分会.Proceedings of 2010 Asia-Pacific Conference on Information Theory (APCIT 2010).中国电子学会信息论分会:中国电子学会信息论分会,2010:335-338.
+
 [7]金启轩.中国新冠肺炎疫情预测建模与理性评估[J].统计与决策,2020,36(05):11-14.
