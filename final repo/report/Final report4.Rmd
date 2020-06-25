@@ -111,7 +111,7 @@ $$S^1_t=\alpha{x_{t-1}}+(1-\alpha)S_{t-1}=\hat{x}_t$$
 
 &emsp;&emsp;我们对累计确诊人数使用R中的HoltWinters()进行霍尔特指数平滑预测,并绘出预测和观测值的曲线图，来观看预测结果。
 
-```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%", fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/3.1.png")
 ```
 
@@ -121,19 +121,19 @@ knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/3.1.png"
 
 &emsp;&emsp;下面采用forecast包预测未来20天的累计确诊人数，预测图如下所示，图中预测部分使用蓝色的线条标识出来，深灰色的阴影区域为80%，浅灰色阴影区为95%的预测区间。
 
-```{r,out.height="80%", out.width="90%",fig.align='center',echo=FALSE}
+```{r,out.height="30%", out.width="40%",fig.align='center',echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/3.2.png")
 ```
 
 &emsp;&emsp;为了检验预测效果，检验延迟1-20阶中的预测误差是否非零自相关，同样继续采用Ljung-Box检验，检验结果如下：
 
-```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%", fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao5.png")
 ```
 
 &emsp;&emsp;经过检验发现，p值大于0.05，说明不存在残差自相关的问题。因此可以做指数平滑模型。下面列出未来20天的累计确诊人数，如下表所示：
 
-```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%", fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao6.png")
 ```
 
@@ -141,25 +141,25 @@ knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao6.pn
 
 &emsp;&emsp;为进一步了解意大利的疫情情况，本文将对现存确诊病例数进行预测，结果如下图所示：
 
-```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%", fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/3.3.png")
 ```
 
 &emsp;&emsp;从图形来看，两条曲线基本吻合，并且根据预测的alpha=1与beta=0.4的情况，这些数据符合我们的预期。
 
-```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%", fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/3.4.png")
 ```
 
 &emsp;&emsp;为了检验预测效果，检验延迟1-20阶中的预测误差是否非零自相关，同样继续采用Ljung-Box检验，检验结果如下：
 
-```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%", fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao9.png")
 ```
 
 &emsp;&emsp;经过检验发现，p值大于0.05，说明不存在残差自相关的问题。因此可以做指数平滑模型。下面列出未来20天的现存确诊人数，如下表所示：
 
-```{r,out.height="80%", out.width="90%", fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%", fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao10.png")
 ```
 
@@ -191,7 +191,7 @@ knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/biao10.p
 
 ## 4.3统计分析
 
-```{r ,out.height="80%", out.width="90%",fig.align='center', echo=FALSE}
+```{r ,out.height="30%", out.width="40%",fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/4.1.png")
 ```
 
@@ -199,7 +199,7 @@ knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/4.1.png"
 
 &emsp;&emsp;尽管有文献提及肺炎发病具有季节性，但就此次而言，由于是新型肺炎，之前未发生过，数据也少，故不宜进行季节性差分。根据ndiffs函数可知原为二阶后平稳。经处理后，原始数据趋于平滑，对数据进行处理后的自相关函数（ACF）分析图与偏自相关函数（PACF）分析图，如下图所示.
 
-```{r ,out.height="80%", out.width="90%",fig.align='center', echo=FALSE}
+```{r ,out.height="30%", out.width="40%",fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/4.2.png")
 ```
 
@@ -215,7 +215,7 @@ knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/4.2.png"
 
 &emsp;&emsp;应用该预测模型对第100天（6月8号）到第108天（6月16号）进行预测，其预测值分别为：33966，34034，34101，34169，34236，34303，34371，34438，34506.
 
-```{r ,out.height="80%", out.width="90%",fig.align='center', echo=FALSE}
+```{r ,out.height="30%", out.width="40%",fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/4.3.png")
 ```
 
@@ -295,7 +295,7 @@ $$x^{(1)}(t)=52990.92{\rm e}^{0.0445t}-50586.22$$
 
 &emsp;&emsp;根据上式预测得到：$X^{(0)}(11)=3763.723(百万）$,即预测所得2020年全年旅游收入为45164.68（百万）。预测结果如图1所示。
 
-```{r,out.height="80%", out.width="90%",fig.align='center', echo=FALSE}
+```{r,out.height="30%", out.width="40%",fig.align='center', echo=FALSE}
 knitr::include_graphics("D:/1wxf/project-alien-adventure/final repo/pic/5.1.png")
 ```
 
